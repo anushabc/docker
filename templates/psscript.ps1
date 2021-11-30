@@ -57,6 +57,7 @@ sleep  10
 choco install vscode
 choco install git
 choco install nodejs.install
+choco install vscode-docker
 
 sleep 5
 
