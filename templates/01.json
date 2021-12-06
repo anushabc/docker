@@ -39,10 +39,17 @@
   
     "azuserobjectid": {
       "type": "string"
+    },
+    "trainerUserName": {
+      "type": "string"
+    },
+    "trainerUserPassword": {
+      "type": "string"
     }
   },
   "variables": {
     "cloudlabsCommon": "[concat(' -AzureUserName ', parameters('AzureUserName'), ' -AzurePassword ', parameters('AzurePassword'), ' -AzureTenantID ', variables('AzureTenantID'), ' -AzureSubscriptionID ', variables('AzureSubscriptionID'), ' -ODLID ', parameters('ODLID'), ' -DeploymentID ', parameters('DeploymentID'),' -azuserobjectid ', parameters('azuserobjectid'),' -InstallCloudLabsShadow ', parameters('InstallCloudLabsShadow'))]",
+    "Enable-CloudLabsEmbeddedShadow": "[concat(' -vmAdminUsername ', parameters('vmAdminUsername'), ' -trainerUserName ', parameters('trainerUserName'), ' -trainerUserPassword ', parameters('trainerUserPassword'))]",
     "AzureSubscriptionID": "[subscription().subscriptionId]",
     "AzureTenantID": "[subscription().tenantId]",
     "location": "[resourceGroup().location]",
@@ -174,7 +181,7 @@
           "imageReference": {
             "publisher": "MicrosoftWindowsServer",
             "offer": "WindowsServer",
-            "sku": "2022-Datacenter",
+            "sku": "2019-Datacenter",
             "version": "latest"
           },
           "osDisk": {
@@ -213,11 +220,11 @@
             "settings": {
               "fileUris": [
                 "https://experienceazure.blob.core.windows.net/templates/cloudlabs-common/cloudlabs-windows-functions.ps1",
-                "https://raw.githubusercontent.com/anushabc/docker/main/templates/psscript.ps1"
+                "https://experienceazure.blob.core.windows.net/templates/edulabs/docker/psscript.ps1"
               ]
             },
             "protectedSettings": {
-              "commandToExecute": "[concat('powershell.exe -ExecutionPolicy ByPass -File psscript.ps1', variables('cloudlabsCommon'))]"
+              "commandToExecute": "[concat('powershell.exe -ExecutionPolicy ByPass -File edulabs/docker/psscript.ps1', variables('cloudlabsCommon'),variables('Enable-CloudLabsEmbeddedShadow'))]"
             }
           }
         }
