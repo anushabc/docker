@@ -5,7 +5,8 @@ Write-Host "Logon-task-started"
 Start-Process C:\Packages\extensions.bat
 Write-Host "Bypass-Execution-Policy" 
 
-choco install docker-desktop
+choco install docker-desktop --version=3.5.2-edge --pre 
+
 Write-Host "Docker-install"
 
 #Installing PostgreSQL extension fro Azure Data Studio
